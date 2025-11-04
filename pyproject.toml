@@ -61,6 +61,7 @@ doc = [
     "sphinxcontrib-autoprogram>=0.1.9",
 ]
 docker = ["docker>=5.0.2"]
+ftdi = ["pyftdi>=0.57.0"]
 graph = ["graphviz>=0.17.0"]
 kasa = ["python-kasa>=0.7.0"]
 modbus = ["pyModbusTCP>=0.2.0"]
@@ -79,7 +80,7 @@ vxi11 = ["python-vxi11>=0.9"]
 xena = ["xenavalkyrie>=3.0.1"]
 deb = ["labgrid[modbus,onewire,snmp]"]
 dev = [
-    "labgrid[doc,docker,graph,kasa,modbus,modbusrtu,mqtt,onewire,pyvisa,snmp,vxi11]",
+    "labgrid[doc,docker,ftdi,graph,kasa,modbus,modbusrtu,mqtt,onewire,pyvisa,snmp,vxi11]",
 
     # additional dev dependencies
     "psutil>=5.8.0",
@@ -229,6 +230,7 @@ include = [
   "labgrid/resource/httpvideostream.py",
   "labgrid/resource/provider.py",
   "labgrid/util/agents/network_interface.py",
+  "labgrid/util/agents/usb_ftdi_relay.py",
   "labgrid/util/agents/usb_hid_relay.py",
   "labgrid/util/exceptions.py",
 ]

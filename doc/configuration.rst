@@ -545,7 +545,8 @@ HIDRelay
 ++++++++
 An :any:`HIDRelay` resource describes a single output of an HID protocol based
 USB relays.
-It currently supports the widely used *dcttech USBRelay* and *lctech LCUS*
+It currently supports the widely used *dcttech USBRelay*, *lctech LCUS* as well
+as *FTDI* based USB-UART bridges coupled with TTL controlled relay modules.
 
 .. code-block:: yaml
 
