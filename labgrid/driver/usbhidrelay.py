@@ -7,6 +7,14 @@ from ..step import step
 from ..protocol import DigitalOutputProtocol
 from ..util.agentwrapper import AgentWrapper
 
+FTDI_PRODUCT_IDS = None
+try:
+    import pyftdi.ftdi
+    FTDI_PRODUCT_IDS = set((v,p[1]) for v in pyftdi.ftdi.Ftdi.PRODUCT_IDS.keys()
+                                        for p in pyftdi.ftdi.Ftdi.PRODUCT_IDS[v].items())
+except ModuleNotFoundError:
+    pass
+
 
 @target_factory.reg_driver
 @attr.s(eq=False)
@@ -25,7 +33,11 @@ class HIDRelayDriver(Driver, DigitalOutputProtocol):
         else:
             host = None
         self.wrapper = AgentWrapper(host)
-        self.proxy = self.wrapper.load('usb_hid_relay')
+        match = (self.relay.vendor_id, self.relay.model_id)
+        if FTDI_PRODUCT_IDS and match in FTDI_PRODUCT_IDS:
+            self.proxy = self.wrapper.load('usb_ftdi_relay')
+        else:
+            self.proxy = self.wrapper.load('usb_hid_relay')
 
     def on_deactivate(self):
         self.wrapper.close()

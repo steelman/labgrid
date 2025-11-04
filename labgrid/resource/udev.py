@@ -11,6 +11,14 @@ from .common import ManagedResource, ResourceManager
 from .base import SerialPort, NetworkInterface
 from ..util import Timeout
 
+FTDI_PRODUCT_IDS = ()
+try:
+    import pyftdi.ftdi
+    FTDI_PRODUCT_IDS = set((f"{v:04x}",f"{p[1]:04x}") for v in pyftdi.ftdi.Ftdi.PRODUCT_IDS.keys()
+                                        for p in pyftdi.ftdi.Ftdi.PRODUCT_IDS[v].items())
+except ModuleNotFoundError:
+    pass
+
 
 @attr.s(eq=False)
 class UdevManager(ResourceManager):
@@ -720,7 +728,7 @@ class HIDRelay(USBResource):
 
         if match not in [("16c0", "05df"),  # dcttech USBRelay2
                          ("5131", "2007"),  # LC-US8
-                         ]:
+                         ] + list(FTDI_PRODUCT_IDS):
             return False
 
         return super().filter_match(device)
