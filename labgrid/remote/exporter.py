@@ -495,16 +495,10 @@ class USBDeditecRelaisExport(USBGenericExport):
 
     def _get_params(self):
         """Helper function to return parameters"""
-        return {
-            "host": self.host,
-            "busnum": self.local.busnum,
-            "devnum": self.local.devnum,
-            "path": self.local.path,
-            "vendor_id": self.local.vendor_id,
-            "model_id": self.local.model_id,
-            "index": self.local.index,
-            "invert": self.local.invert,
-        }
+        p = super()._get_params()
+        p["index"] = self.local.index
+        p["invert"] = self.local.invert
+        return p
 
 
 @attr.s(eq=False)
@@ -516,17 +510,10 @@ class USBHIDRelayExport(USBGenericExport):
 
     def _get_params(self):
         """Helper function to return parameters"""
-        return {
-            "host": self.host,
-            "busnum": self.local.busnum,
-            "devnum": self.local.devnum,
-            "path": self.local.path,
-            "vendor_id": self.local.vendor_id,
-            "model_id": self.local.model_id,
-            "index": self.local.index,
-            "invert": self.local.invert,
-        }
-
+        p = super()._get_params()
+        p["index"] = self.local.index
+        p["invert"] = self.local.invert
+        return p
 
 @attr.s(eq=False)
 class USBFlashableExport(USBGenericExport):
